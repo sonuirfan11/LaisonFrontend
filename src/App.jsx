@@ -7,6 +7,7 @@ import SearchPage from "./pages/Home/SearchPage";
 import BottomNav from "./components/common/BottomNav";
 import AccountPage from "./pages/Account/AccountPage";
 import EditProfilePage from "./pages/Account/EditProfilePage";
+import ManageAddressPage from "./pages/Account/Address";
 import CategoryPage from "./pages/Categories/CategoryPage";
 import ServiceDetailPage from "./pages/Categories/ServiceDetailPage";
 import Login from "./pages/Account/Login";
@@ -30,7 +31,8 @@ function Layout() {
           <Route path="/search" element={<SearchPage />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
           <Route path="/account" element={<AccountPage />} />
-          <Route path="/account/edit-profile" element={<EditProfilePage />} />
+          <Route path="/account/profile" element={<EditProfilePage />} />
+          <Route path="/account/address" element={<ManageAddressPage />} />
           <Route path="/category/:slug" element={<CategoryPage />} />
            <Route path="/service/:id" element={<ServiceDetailPage />} />
         </Routes>

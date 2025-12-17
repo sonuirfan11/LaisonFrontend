@@ -2,7 +2,7 @@ import { useState, useEffect  } from "react";
 import { useNavigate } from "react-router-dom";
 import { editUserProfileApi } from "../../data/api/auth";
 import { useAuth } from "../../context/AuthContext";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 export default function EditProfilePage() {
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
@@ -40,12 +40,6 @@ export default function EditProfilePage() {
   setErrors(prev => ({ ...prev, [name]: undefined }));
 };
 
-//   const handleChange = (e) => {
-//     setForm({
-//       ...form,
-//       [e.target.name]: e.target.value,
-//     });
-//   };
 
   const handleEditProfile = async (e) => {
     e.preventDefault(); // stop page reload
@@ -54,17 +48,6 @@ export default function EditProfilePage() {
 
       if (res.data.success) {
           setUser(prev => ({ ...prev, ...res.data.data }));
-        //navigate("/account"); // redirect if needed
-//         toast('Profile Updated Successfully', {
-//             position: "top-right",
-//             autoClose: 5000,
-//             hideProgressBar: false,
-//             closeOnClick: false,
-//             pauseOnHover: true,
-//             draggable: true,
-//             progress: undefined,
-//             theme: "light"
-//             });
            setErrors({});
            toast.success(res.data.message, {
                 position: "top-center",

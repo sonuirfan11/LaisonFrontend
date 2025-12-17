@@ -8,6 +8,7 @@ import {
 import { logoutApi } from "../../data/api/auth";
 import { ShoppingCartIcon, UserIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
+import { toast } from 'react-toastify';
 const containerStyle = {
   width: "100%",
   height: "300px",
@@ -29,27 +30,16 @@ export default function Header() {
   }, [user, loading]);
 
   const handleLogout = async (e) => {
-      try {
-          const res = await logoutApi();
-          if (res.data.success) {
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
              setIsLoggedIn(false);
-            navigate("/");
-          }
-          else {
-            setError(res.data.message || "Not Logged in!");
-          }
-      }
-      catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
-        console.log(err.response.data.message);
-        }
-      else {
-      console.log("Something went wrong. Try again.");
-        }
-    }
-finally {
-       setIsOpen(false);
-    }
+             setIsOpen(false);
+//             navigate("/");
+            toast.success("Logout Successful!", {
+                position: "top-center",
+                autoClose: 3000,
+                pauseOnHover: false,
+            });
   };
 
   const { isLoaded } = useJsApiLoader({

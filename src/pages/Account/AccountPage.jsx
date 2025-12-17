@@ -46,7 +46,7 @@ export default function AccountPage() {
         {/* Menu list */}
         <MenuItem
           icon={<PencilSquareIcon className="h-5 w-5" />}
-          onClick={() => navigate("/account/edit-profile")}
+          onClick={() => navigate("/account/profile")}
           text="Edit Profile"
         />
         <MenuItem
@@ -54,7 +54,10 @@ export default function AccountPage() {
           text="Bookings"
         />
         <MenuItem icon={<StarIcon className="h-5 w-5" />} text="Ratings" />
-        <MenuItem icon={<MapPinIcon className="h-5 w-5" />} text="Addresses" />
+        <MenuItem
+            icon={<MapPinIcon className="h-5 w-5" />}
+            onClick={() => navigate("/account/address")}
+            text="Addresses" />
         <MenuItem
           icon={<QuestionMarkCircleIcon className="h-5 w-5" />}
           text="Help"

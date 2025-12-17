@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { sendOtpApi, verifyOtpApi } from "../../data/api/auth";
 import { useAuth } from "../../context/AuthContext"; // adjust path
 import { fetchUserProfileApi } from "../../data/api/auth";
+import { toast } from 'react-toastify';
 import {
   UserIcon,
   PencilIcon,
@@ -62,6 +63,11 @@ export default function Login() {
     setUser(profileRes.data);
 
     navigate("/");
+    toast.success("Login Successful!", {
+                position: "top-center",
+                autoClose: 3000,
+                pauseOnHover: false,
+            });
 }
  else {
         setError(res.data.message || "Invalid OTP");
