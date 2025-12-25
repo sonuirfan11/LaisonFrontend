@@ -32,7 +32,7 @@ export default function Login() {
 
     try {
       setLoading(true);
-      const res = await sendOtpApi(mobile);
+      const res = await sendOtpApi('+91'+mobile);
       setStep(2);
     } catch (err) {
         console.log(err)
@@ -51,7 +51,7 @@ export default function Login() {
 
     try {
       setLoading(true);
-      const res = await verifyOtpApi(mobile, otp);
+      const res = await verifyOtpApi('+91'+mobile, otp);
       if (res.data.success) {
 
     // 🔥 Save JWT tokens
