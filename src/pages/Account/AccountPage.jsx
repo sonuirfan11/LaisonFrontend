@@ -1,4 +1,6 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import {useState,useEffect} from "react"
+import { toast } from 'react-toastify';
 import {
   UserIcon,
   PencilSquareIcon,
@@ -15,8 +17,20 @@ import { useNavigate } from "react-router-dom";
 
 export default function AccountPage() {
   const navigate = useNavigate();
-  const { user, loading } = useAuth();
-
+  const { user, loading, logout } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  
+  
+    const handleLogout = async (e) => {
+             logout();
+              navigate("/");
+              toast.success("Logout Successful!", {
+                  position: "top-center",
+                  autoClose: 3000,
+                  pauseOnHover: false,
+              });
+    };
+  
   const MenuItem = ({ icon, text, onClick }) => (
     <button
       onClick={onClick}
@@ -70,7 +84,9 @@ export default function AccountPage() {
             className="w-full flex items-center justify-center space-x-2 text-red-500 font-semibold p-4"
           >
             <ArrowRightOnRectangleIcon className="h-5 w-5" />
-            <span>Logout</span>
+            <span  onClick={() => {
+                              handleLogout()
+                            }}>Logout</span>
           </button>
         </div>
       </div>

@@ -12,6 +12,7 @@ import CategoryPage from "./pages/Categories/CategoryPage";
 import ServiceDetailPage from "./pages/Categories/ServiceDetailPage";
 import Login from "./pages/Account/Login";
 import { ToastContainer, toast } from 'react-toastify';
+import DashboardLayout from "./pages/Home/DashboardLayout";
 
 
 function Layout() {
@@ -30,16 +31,19 @@ function Layout() {
           <Route path="/login" element={<Login />} />
           <Route path="/search" element={<SearchPage />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/account/profile" element={<EditProfilePage />} />
-          <Route path="/account/address" element={<ManageAddressPage />} />
+          {/* <Route path="dashboard" element={<DashboardLayout />}> */}
+            <Route path="account" element={<AccountPage />} />
+            <Route path="account/profile" element={<EditProfilePage />} />
+            <Route path="account/address" element={<ManageAddressPage />} />
+            
+
           <Route path="/category/:slug" element={<CategoryPage />} />
-           <Route path="/service/:id" element={<ServiceDetailPage />} />
+          <Route path="/service/:id" element={<ServiceDetailPage />} />
         </Routes>
       </div>
       {!hideHeader && <Footer />}
-       {!hideHeader && <BottomNav />}
-    
+      {!hideHeader && <BottomNav />}
+
     </div>
   );
 }
@@ -48,7 +52,7 @@ function App() {
   return (
     <Router>
       <Layout />
-       <ToastContainer />
+      <ToastContainer />
     </Router>
   );
 }

@@ -1,16 +1,9 @@
 import { Plus, MoreVertical, X } from "lucide-react";
 import { useState,useEffect } from "react";
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  Input,
-  Select,
-  Button,
-  FormRow,
-} from "../../components/form";
+import { toast } from 'react-toastify';
 import PageHeader from "../../components/Account/AccountPageHeader";
 import AddressModalForm from "./AddressModalForm";
-import { fetchAddress,createAddress,updateAddress } from "../../data/api/address";
+import { fetchAddress,createAddress,updateAddress,deleteAddress } from "../../data/api/address";
 
 export default function ManageAddressPage() {
   const [openMenuId, setOpenMenuId] = useState(null);
@@ -25,8 +18,7 @@ export default function ManageAddressPage() {
   const loadAddresses = async () => {
     try {
       const res = await fetchAddress();
-      console.log(res.data)
-      setAddresses(res.data); // backend list
+      setAddresses(res.data);
     } catch (err) {
       console.error("Failed to load addresses", err);
     }
@@ -38,7 +30,6 @@ export default function ManageAddressPage() {
     } else {
       await createAddress(data);
     }
-
     setShowModal(false);
     setEditingAddress(null);
     loadAddresses();
@@ -60,6 +51,28 @@ export default function ManageAddressPage() {
     .filter(Boolean)
     .join(", ");
 };
+
+  const handleAddressDelete = async (id) => {
+  try {
+    const res = await deleteAddress(id); 
+    setOpenMenuId(null);
+    toast.success("Address Deleted!", {
+                    position: "top-center",
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                });
+    setAddresses(prev => prev.filter(addr => addr.id !== id));
+
+  } catch (err) {
+     toast.error("Something went wrong!", {
+                    position: "top-center",
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                });
+                console.error(err);
+    }
+};   
+
   return (
     <div className="w-100 mx-auto p-2 md:p-6 mt-2">
       <div className="mb-6">
@@ -77,13 +90,17 @@ export default function ManageAddressPage() {
           Add New Address
         </button>
       </div>
-
-      <div className="space-y-6">
+  {addresses.length === 0 ? (
+     <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 p-8 text-center">
+    <p className="text-sm text-gray-500">No Address Found</p>
+  </div>
+  ):(<div className="space-y-6">
   {addresses.map((item) => (
     <div
       key={item.id}
-      className="relative rounded-2xl border bg-white p-5 shadow-sm hover:shadow-md transition"
+      className="relative rounded-2xl border border-gray-300 bg-white p-5 shadow-sm hover:shadow-lg transition"
     >
+
       {/* Menu */}
       <button
         onClick={() =>
@@ -132,6 +149,9 @@ export default function ManageAddressPage() {
           </button>
 
           <button
+            onClick={() => {
+              handleAddressDelete(item.id)
+            }}
             className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50"
           >
             Delete
@@ -141,6 +161,7 @@ export default function ManageAddressPage() {
     </div>
   ))}
 </div>
+)}
 
 
       {showModal && (

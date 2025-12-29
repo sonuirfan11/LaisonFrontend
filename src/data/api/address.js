@@ -1,4 +1,4 @@
-import api from "./auth.js";
+import api from "./axioswrapper"
 
 export const fetchAddress = () => api.get("/auth/address/client/");
 
@@ -12,3 +12,6 @@ export const updateAddress = (id, data) =>
 
 export const fetchAddressDetail = () =>
   api.get("/auth/address/client/detail/");
+
+export const deleteAddress = (id, data) =>
+  api.delete(`/auth/address/client/detail/${id}/`);
