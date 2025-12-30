@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { editUserProfileApi } from "../../data/api/auth";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from 'react-toastify';
+import PageHeader from "../../components/Account/AccountPageHeader";
 export default function EditProfilePage() {
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
@@ -42,18 +43,20 @@ export default function EditProfilePage() {
 
 
   const handleEditProfile = async (e) => {
-    e.preventDefault(); // stop page reload
+    e.preventDefault();
     try {
       const res = await editUserProfileApi(form);
 
       if (res.data.success) {
           setUser(prev => ({ ...prev, ...res.data.data }));
            setErrors({});
+           navigate("/account");
            toast.success(res.data.message, {
                 position: "top-center",
                 autoClose: 3000,
                 pauseOnHover: false,
             });
+
 
       } else {
         setErrors(res.data.message || "Something went wrong");
@@ -66,7 +69,7 @@ export default function EditProfilePage() {
 
     } catch (err) {
     if (err.response?.data?.errors) {
-      setErrors(err.response.data.errors); // <<< store DRF field errors
+      setErrors(err.response.data.errors); 
     } else {
       setErrors({ general: "Something went wrong" });
     }
@@ -74,10 +77,10 @@ export default function EditProfilePage() {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-black text-center">Edit Profile</h2>
+    <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md mt-6">
+     <PageHeader title="Edit Profile" />
 
-      <form className="w-full max-w-lg space-y-6" onSubmit={handleEditProfile}>
+      <form className="w-full max-w-lg space-y-6 " onSubmit={handleEditProfile}>
 
         <div className="flex flex-wrap -mx-3">
 
@@ -165,7 +168,7 @@ export default function EditProfilePage() {
                 )}
           </div>
 
-          <div className="w-full md:w-1/3 px-3">
+          {/* <div className="w-full md:w-1/3 px-3">
             <label className="block text-xs font-bold mb-2" htmlFor="zip">
               Zip
             </label>
@@ -178,7 +181,7 @@ export default function EditProfilePage() {
               placeholder="90210"
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4"
             />
-          </div>
+          </div> */}
         </div>
 
 {/*         {error && <p className="text-red-500 text-sm">{error}</p>} */}

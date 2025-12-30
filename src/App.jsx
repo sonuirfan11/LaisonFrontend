@@ -12,7 +12,7 @@ import CategoryPage from "./pages/Categories/CategoryPage";
 import ServiceDetailPage from "./pages/Categories/ServiceDetailPage";
 import Login from "./pages/Account/Login";
 import { ToastContainer, toast } from 'react-toastify';
-import DashboardLayout from "./pages/Home/DashboardLayout";
+import ProtectedRoute  from "./pages/Home/ProtectedRoute ";
 
 
 function Layout() {
@@ -32,10 +32,11 @@ function Layout() {
           <Route path="/search" element={<SearchPage />} />
           {/* <Route path="/cart" element={<CartPage />} /> */}
           {/* <Route path="dashboard" element={<DashboardLayout />}> */}
+          <Route  element={<ProtectedRoute />} >
             <Route path="account" element={<AccountPage />} />
             <Route path="account/profile" element={<EditProfilePage />} />
             <Route path="account/address" element={<ManageAddressPage />} />
-            
+          </Route>
 
           <Route path="/category/:slug" element={<CategoryPage />} />
           <Route path="/service/:id" element={<ServiceDetailPage />} />

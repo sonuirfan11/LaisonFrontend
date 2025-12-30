@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { HiClipboardList, HiAdjustments } from "react-icons/hi";
 import { FaRegStar } from "react-icons/fa6";
+import RatingBar from "../Rating/RatingBar";
+import AverageRating from "../Rating/AverageRating";
+import ReviewItem from "../Rating/ReviewItem";
 
 export default function ServiceTabs() {
   const [activeTab, setActiveTab] = useState("description");
@@ -12,33 +15,58 @@ export default function ServiceTabs() {
       id: "description",
       label: "Description",
       icon: <HiClipboardList className="w-5 h-5 mr-2" />,
-      content: (
-        <span className="font-medium text-gray-800 dark:text-white">
-          📖 Profile tab’s associated content
-        </span>
-      ),
+      // content: (
+      //   <span className="font-medium text-gray-800 dark:text-white">
+      //     📖 Profile tab’s associated content
+      //   </span>
+      // ),
     },
     {
       id: "review",
       label: "Rating",
       icon: <FaRegStar className="w-5 h-5 mr-2" />,
-      content: (
-        <span className="font-medium text-black dark:text-gray-200">
-          ⭐ Dashboard tab’s associated content
-        </span>
-      ),
+      // content: (
+      //   <span className="font-medium text-black dark:text-gray-200">
+      //     ⭐ Dashboard tab’s associated content
+      //   </span>
+      // ),
     },
     {
       id: "qa",
       label: "Q & A",
       icon: <HiAdjustments className="w-5 h-5 mr-2" />,
-      content: (
-        <span className="font-medium text-gray-800 dark:text-white">
-          ❓ Settings tab’s associated content
-        </span>
-      ),
+      // content: (
+      //   <span className="font-medium text-gray-800 dark:text-white">
+      //     ❓ Settings tab’s associated content
+      //   </span>
+      // ),
     },
   ];
+
+  const reviews = [
+  {
+    rating: 5,
+    name: "Rahul Sharma",
+    date: "12 Aug 2025",
+    review: "Excellent service! The professional was on time and very skilled.",
+  },
+  {
+    rating: 4,
+    name: "Priya Verma",
+    date: "08 Aug 2025",
+    review: "Good experience overall. Could improve response time.",
+  },
+];
+
+const totalRatings = 225;
+
+const ratingStats = [
+  { rating: 5, count: 120, color: "#22c55e" },
+  { rating: 4, count: 60,  color: "#84cc16" },
+  { rating: 3, count: 30,  color: "#eab308" },
+  { rating: 2, count: 10,  color: "#f97316" },
+  { rating: 1, count: 5,   color: "#ef4444" },
+];
 
   // Update underline position
   useEffect(() => {
@@ -97,19 +125,49 @@ export default function ServiceTabs() {
           </div>
         )}
 
-        {activeTab === "review" && (
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Ratings & Reviews</h3>
-            <ul className="space-y-3">
-              <li className="border-b border-gray-200 dark:border-gray-700 pb-2">
-                ⭐⭐⭐⭐☆ — Great service!
-              </li>
-              <li className="border-b border-gray-200 dark:border-gray-700 pb-2">
-                ⭐⭐⭐⭐⭐ — Absolutely loved it.
-              </li>
-            </ul>
-          </div>
-        )}
+ {activeTab === "review" && (
+  <div>
+    <h3 className="text-lg font-semibold mb-4">
+      Ratings & Reviews
+    </h3>
+
+    <div className="flex flex-col md:flex-row gap-6 my-5">
+      {/* Average Rating */}
+      <div className="md:w-1/3 flex justify-center md:justify-start mt-4">
+        <AverageRating
+          average={4.3}
+          totalRatings={225}
+          totalReviews={180}
+        />
+      </div>
+
+      {/* Rating Bars */}
+      <div className="flex-1 space-y-2">
+        {ratingStats.map(({ rating, count, color }) => (
+          <RatingBar
+            key={rating}
+            rating={rating}
+            count={count}
+            total={totalRatings}
+            color={color}
+          />
+        ))}
+      </div>
+
+    </div>
+        {reviews.map((item, index) => (
+    <ReviewItem
+      key={index}
+      rating={item.rating}
+      name={item.name}
+      date={item.date}
+      review={item.review}
+    />
+  ))}
+  </div>
+)}
+
+
 
         {activeTab === "qa" && (
           <div>
